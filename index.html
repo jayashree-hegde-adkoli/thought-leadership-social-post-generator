@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thought Leadership Social Post Generator</title>
+<meta name="description" content="Stop generating posts you don't believe in. Coach yourself to a clear perspective first — then get ready-to-post content for LinkedIn, X, Facebook & Substack."/>
+<meta property="og:title" content="Thought Leadership Social Post Generator"/>
+<meta property="og:description" content="Paste a URL or idea, choose your angle, and get platform-ready posts that sound like you — not AI."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Thought Leadership Social Post Generator"/>
+<meta name="twitter:description" content="Angle-first. Coaching-first. Built for professionals who want to post with confidence."/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #185FA5; --blue-light: #E6F1FB; --blue-mid: #B5D4F4;
+    --green-light: #EAF3DE; --green-dark: #3B6D11;
+    --amber-light: #FAEEDA; --amber-dark: #854F0B;
+    --coral-light: #FAECE7; --coral-dark: #993C1D;
+    --gray-bg: #F7F7F5; --gray-card: #FFFFFF;
+    --gray-border: rgba(0,0,0,0.12); --gray-border-subtle: rgba(0,0,0,0.07);
+    --text-primary: #1A1A1A; --text-secondary: #555; --text-tertiary: #888;
+    --danger: #C0392B; --radius-md: 8px; --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --blue: #5BA3E8; --blue-light: #0C2540; --blue-mid: #1A3F6B;
+      --green-light: #1A2E12; --green-dark: #8BCB5A;
+      --amber-light: #2E2010; --amber-dark: #F0B35A;
+      --coral-light: #2E1510; --coral-dark: #F08A6A;
+      --gray-bg: #111; --gray-card: #1C1C1C;
+      --gray-border: rgba(255,255,255,0.12); --gray-border-subtle: rgba(255,255,255,0.07);
+      --text-primary: #EDEDED; --text-secondary: #AAA; --text-tertiary: #666;
+      --danger: #E87070;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--gray-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+  a { color: var(--blue); }
+
+  /* Layout */
+  .page { max-width: 700px; margin: 0 auto; padding: 2.5rem 1.25rem 6rem; }
+
+  /* Header */
+  .header { margin-bottom: 2rem; }
+  .header-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .site-title { font-size: 22px; font-weight: 600; color: var(--text-primary); }
+  .byline { font-size: 12px; color: var(--blue); text-decoration: none; white-space: nowrap; margin-top: 4px; }
+  .tagline { font-size: 17px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+  .sub { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+  .trust-bar { display: flex; gap: 16px; flex-wrap: wrap; }
+  .trust-item { font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 5px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); display: inline-block; flex-shrink: 0; }
+
+  /* How it works */
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin-bottom: 1.75rem; }
+  .how-card { background: var(--gray-card); border: 0.5px solid var(--gray-border); border-radius: var(--radius-md); padding: 12px 14px; }
+  .how-title { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .how-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Sample */
+  .sample-toggle { font-size: 13px; color: var(--blue); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; margin-bottom: 12px; }
+  .sample-box { border: 0.5px solid var(--gray-border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.75rem; }
+  .sample-header { background: var(--gray-bg); padding: 10px 16px; font-size: 12px; color: var(--text-secondary); border-bottom: 0.5px solid var(--gray-border-subtle); }
+  .sample-body { padding: 1rem 1.25rem; }
+  .sample-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .sample-pre { font-size: 13px; color: var(--text-primary); line-height: 1.8; white-space: pre-wrap; font-family: inherit; max-height: 180px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+  .sample-note { font-size: 12px; color: var(--text-tertiary); margin-top: 8px; }
+
+  /* Form */
+  .form-group { margin-bottom: 1.25rem; }
+  label { font-size: 13px; color: var(--text-secondary); display: block; margin-bottom: 6px; }
+  textarea, select { width: 100%; font-size: 15px; padding: 10px 12px; border-radius: var(--radius-md); border: 0.5px solid var(--gray-border); background: var(--gray-card); color: var(--text-primary); font-family: inherit; }
+  textarea { resize: vertical; line-height: 1.6; }
+  select { appearance: none; cursor: pointer; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+  @media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
+
+  /* Pills */
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { font-size: 13px; padding: 6px 14px; border-radius: 20px; cursor: pointer; border: 0.5px solid var(--gray-border); background: var(--gray-card); color: var(--text-secondary); font-weight: 400; transition: all 0.15s; }
+  .pill.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); font-weight: 500; }
+
+  /* Buttons */
+  .btn-primary { padding: 10px 28px; font-size: 15px; font-weight: 600; border-radius: var(--radius-md); background: var(--blue); color: #fff; border: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary { padding: 7px 16px; font-size: 13px; border-radius: var(--radius-md); background: var(--gray-card); color: var(--text-secondary); border: 0.5px solid var(--gray-border); cursor: pointer; }
+  .btn-ghost { font-size: 13px; color: var(--text-secondary); background: none; border: none; cursor: pointer; padding: 0; }
+  .btn-copy { padding: 7px 16px; font-size: 13px; border-radius: var(--radius-md); background: var(--gray-bg); color: var(--text-secondary); border: 0.5px solid var(--gray-border); cursor: pointer; }
+  .btn-copy.copied { background: var(--green-light); color: var(--green-dark); }
+  .btn-regen { padding: 7px 16px; font-size: 13px; border-radius: var(--radius-md); background: var(--gray-card); color: var(--text-secondary); border: 0.5px solid var(--gray-border); cursor: pointer; }
+
+  /* Section label */
+  .section-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; }
+
+  /* Summary bar */
+  .summary-bar { background: var(--gray-card); border: 0.5px solid var(--gray-border); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 1.5rem; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+  .summary-bar strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Cards */
+  .card { border: 0.5px solid var(--gray-border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 12px; background: var(--gray-card); cursor: pointer; transition: border-color 0.15s; }
+  .card:hover { border-color: var(--blue); }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .card-meta { display: flex; gap: 10px; align-items: center; }
+  .card-num { font-size: 12px; color: var(--text-tertiary); }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .risk-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; }
+  .risk-safe { background: var(--green-light); color: var(--green-dark); }
+  .risk-moderate { background: var(--amber-light); color: var(--amber-dark); }
+  .risk-bold { background: var(--coral-light); color: var(--coral-dark); }
+  .card-believes { font-size: 14px; color: var(--text-primary); margin-bottom: 6px; line-height: 1.6; }
+  .card-why { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; line-height: 1.5; }
+  .card-who { font-size: 12px; color: var(--text-tertiary); }
+
+  /* Hook cards */
+  .hook-style { font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .hook-example { font-size: 15px; color: var(--text-primary); margin-bottom: 10px; line-height: 1.7; font-style: italic; }
+  .hook-preview-label { font-size: 11px; color: var(--text-tertiary); margin-bottom: 6px; }
+  .hook-preview-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+  .hook-divider { border: none; border-top: 0.5px solid var(--gray-border-subtle); margin-bottom: 10px; }
+
+  /* Posts */
+  .context-bar { background: var(--gray-card); border: 0.5px solid var(--gray-border); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 1.25rem; font-size: 13px; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .context-bar strong { color: var(--text-primary); font-weight: 600; }
+  .post-actions-top { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+  .tab-bar { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .post-card { border: 0.5px solid var(--gray-border); border-radius: var(--radius-lg); padding: 1.25rem; background: var(--gray-card); }
+  .post-char { display: flex; justify-content: flex-end; margin-bottom: 8px; font-size: 12px; color: var(--text-tertiary); }
+  .post-char.over { color: var(--danger); }
+  .post-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
+  .post-body { font-size: 14px; color: var(--text-primary); line-height: 1.8; white-space: pre-wrap; font-family: inherit; }
+  .substack-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .substack-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--blue-light); color: var(--blue); }
+  .post-btns { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .nav-btns { margin-top: 1.5rem; display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* Footer */
+  .footer { margin-top: 2.5rem; border-top: 0.5px solid var(--gray-border-subtle); padding-top: 1.5rem; }
+  .footer-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+  .footer-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 6px; }
+  .footer-note { font-size: 12px; color: var(--text-tertiary); }
+
+  .error { color: var(--danger); font-size: 14px; margin-bottom: 12px; }
+  .loading-text { font-size: 14px; color: var(--text-secondary); margin-top: 8px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-row">
+      <div class="site-title">Thought Leadership Social Post Generator</div>
+      <a class="byline" href="https://www.linkedin.com/in/jayashree-murthy/" target="_blank" rel="noreferrer">Made by Jayashree ↗</a>
+    </div>
+    <p class="tagline">Stop generating posts you don't believe in.</p>
+    <p class="sub">Most AI-based content tools hand you a polished post before you've figured out what you actually think. This one doesn't. It coaches you through your perspective first then writes posts for LinkedIn, X, Facebook &amp; Substack that sound like <em>you</em>, not like AI.</p>
+    <div class="trust-bar">
+      <span class="trust-item"><span class="dot"></span>Angle-first, not template-first</span>
+      <span class="trust-item"><span class="dot"></span>Role-aware perspective coaching</span>
+      <span class="trust-item"><span class="dot"></span>4 platforms in one flow</span>
+    </div>
+  </div>
+
+  <!-- INPUT PHASE -->
+  <div id="phase-input">
+
+    <!-- How it works -->
+    <p class="section-label">How it works</p>
+    <div class="how-grid">
+      <div class="how-card"><p class="how-title">01 — Clarify</p><p class="how-desc">Paste a URL or rough idea. We surface what the topic is really about in one line.</p></div>
+      <div class="how-card"><p class="how-title">02 — Own your angle</p><p class="how-desc">Choose from 3 perspectives you can genuinely stand behind — Safe, Moderate, or Bold.</p></div>
+      <div class="how-card"><p class="how-title">03 — Pick your hook</p><p class="how-desc">Select the opening style that feels most natural. Preview how it opens before committing.</p></div>
+      <div class="how-card"><p class="how-title">04 — Post with confidence</p><p class="how-desc">Get platform-ready posts that sound like you — not AI. Regenerate any platform instantly.</p></div>
+    </div>
+
+    <!-- Sample -->
+    <button class="sample-toggle" id="sample-toggle" onclick="toggleSample()">See a sample output first →</button>
+    <div id="sample-box" class="sample-box hidden">
+      <div class="sample-header">Sample — Topic: <em>AI content tools skip the thinking step</em> &nbsp;·&nbsp; Role: Marketing &nbsp;·&nbsp; Angle: The thinking gap nobody talks about</div>
+      <div class="sample-body">
+        <p class="sample-label">LinkedIn post</p>
+        <pre class="sample-pre">Most AI writing tools solve the wrong problem.
+
+They fix the blank page. But they don't fix the blank mind.
+
+I've watched smart professionals churn out 5 LinkedIn posts a week — and none of them say anything. They're polished. They're formatted. They're empty.
+
+The real block isn't writing. It's not knowing what you actually believe about a topic.</pre>
+        <p class="sample-note">+ X, Facebook &amp; Substack posts also generated in the same flow.</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-group">
+      <label for="inp-topic">URL or idea <span style="opacity:0.7">(rough input is completely fine — we'll shape it together)</span></label>
+      <textarea id="inp-topic" rows="4" placeholder="Paste a URL, article title, or 3–4 rough lines about what's on your mind..."></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div>
+        <label for="inp-role">Your role</label>
+        <select id="inp-role">
+          <option value="">Select role</option>
+          <option>Marketing</option><option>Sales</option><option>Engineer</option>
+          <option>Product Manager</option><option>Founder</option><option>Customer Success</option>
+          <option>Consultant</option><option>Student</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="inp-tone">Preferred tone</label>
+        <select id="inp-tone">
+          <option value="">Select tone</option>
+          <option>Conversational</option><option>Opinionated</option><option>Educational</option><option>Story-driven</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Platforms</label>
+      <div class="pills" id="platform-pills">
+        <button class="pill active" data-platform="LinkedIn" onclick="togglePlatform(this)">LinkedIn</button>
+        <button class="pill active" data-platform="X (Twitter)" onclick="togglePlatform(this)">X (Twitter)</button>
+        <button class="pill" data-platform="Facebook" onclick="togglePlatform(this)">Facebook</button>
+        <button class="pill" data-platform="Substack" onclick="togglePlatform(this)">Substack</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inp-context">Personal context <span style="opacity:0.7">(optional — what have you seen, struggled with, or learned here?)</span></label>
+      <textarea id="inp-context" rows="2" placeholder="e.g. I've tried three AI writing tools this year — and every post they gave me sounded like it could've been written by anyone. That's what pushed me to think differently about this..."></textarea>
+    </div>
+
+    <p class="error hidden" id="input-error"></p>
+    <button class="btn-primary" id="btn-generate" onclick="handleGenerate()">Clarify my thinking →</button>
+  </div>
+
+  <!-- ANGLES PHASE -->
+  <div id="phase-angles" class="hidden">
+    <div class="summary-bar"><strong>This is about:</strong> <span id="summary-text"></span></div>
+    <p class="section-label" style="font-size:15px;color:var(--text-primary)">Which angle feels closest to what you actually think?</p>
+    <div id="angles-list"></div>
+    <p class="loading-text hidden" id="angles-loading">Finding the right hooks...</p>
+    <p class="error hidden" id="angles-error"></p>
+    <button class="btn-ghost" style="margin-top:8px" onclick="reset()">← Start over</button>
+  </div>
+
+  <!-- HOOK PHASE -->
+  <div id="phase-hook" class="hidden">
+    <div class="summary-bar"><strong>Your angle:</strong> <span id="hook-angle-title"></span></div>
+    <p class="section-label" style="font-size:15px;color:var(--text-primary);margin-bottom:4px">Which opening feels most natural for you?</p>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem">Each card shows the hook style and a preview of how it would open your LinkedIn post.</p>
+    <div id="hooks-list"></div>
+    <p class="loading-text hidden" id="hook-loading">Writing your posts...</p>
+    <p class="error hidden" id="hook-error"></p>
+    <button class="btn-ghost" style="margin-top:8px" onclick="goBackToAngles()">← Back to angles</button>
+  </div>
+
+  <!-- POSTS PHASE -->
+  <div id="phase-posts" class="hidden">
+    <div class="context-bar" id="posts-context-bar"></div>
+    <div class="post-actions-top">
+      <button class="btn-copy" id="btn-copy-all" onclick="copyAll()">Copy all posts</button>
+    </div>
+    <div class="tab-bar" id="post-tabs"></div>
+    <div id="post-content"></div>
+    <div class="nav-btns">
+      <button class="btn-secondary" onclick="goBackToHook()">← Try a different hook</button>
+      <button class="btn-primary" onclick="reset()">Start with a new idea</button>
+    </div>
+    <div class="footer">
+      <p class="footer-label">About this tool</p>
+      <p class="footer-text">Built by <a href="https://www.linkedin.com/in/jayashree-murthy/" target="_blank" rel="noreferrer">Jayashree</a>, Senior Growth Marketing Manager with 10+ years in B2B SaaS. The design philosophy: most content tools solve the blank page, not the blank mind. This one forces perspective-first thinking before writing a single word — using a coaching-style angle engine that mirrors how a good content strategist actually works.</p>
+      <p class="footer-note">Powered by Claude (Anthropic)</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API_URL = "https://api.anthropic.com/v1/messages";
+const MODEL = "claude-sonnet-4-20250514";
+
+let state = {
+  platforms: ["LinkedIn","X (Twitter)"],
+  summary: "", angles: [], selectedAngle: null,
+  hooks: [], selectedHook: null,
+  posts: null, activeTab: "LinkedIn"
+};
+
+function toggleSample() {
+  const box = document.getElementById("sample-box");
+  const btn = document.getElementById("sample-toggle");
+  const hidden = box.classList.toggle("hidden");
+  btn.textContent = hidden ? "See a sample output first →" : "Hide sample output";
+}
+
+function togglePlatform(btn) {
+  const p = btn.dataset.platform;
+  if (btn.classList.contains("active")) {
+    if (state.platforms.length === 1) return;
+    btn.classList.remove("active");
+    state.platforms = state.platforms.filter(x => x !== p);
+  } else {
+    btn.classList.add("active");
+    state.platforms.push(p);
+  }
+}
+
+function showPhase(name) {
+  ["input","angles","hook","posts"].forEach(p => {
+    document.getElementById("phase-"+p).classList.toggle("hidden", p !== name);
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function setError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.classList.toggle("hidden", !msg);
+}
+
+async function callClaude(messages, system) {
+  const res = await fetch(API_URL, {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({model:MODEL, max_tokens:1500, system, messages})
+  });
+  const data = await res.json();
+  const text = data.content?.map(b=>b.text||"").join("") || "";
+  return JSON.parse(text.replace(/```json|```/g,"").trim());
+}
+
+async function handleGenerate() {
+  const topic = document.getElementById("inp-topic").value.trim();
+  const role = document.getElementById("inp-role").value;
+  const tone = document.getElementById("inp-tone").value;
+  const context = document.getElementById("inp-context").value.trim();
+  if (!topic) { setError("input-error","Please share a URL or idea."); return; }
+  if (!role) { setError("input-error","Please select your role."); return; }
+  if (!tone) { setError("input-error","Please select a tone."); return; }
+  setError("input-error","");
+  const btn = document.getElementById("btn-generate");
+  btn.disabled = true; btn.textContent = "Thinking...";
+  try {
+    const result = await callClaude([{role:"user",content:`Topic/URL: ${topic}\nRole: ${role}\nTone: ${tone}${context?"\nPersonal context: "+context:""}`}],
+      `You are a Credible Industry Thought Leadership Thinking Partner. Summarize the topic in 1 line, generate EXACTLY 3 distinct angle options. Respond ONLY with JSON:\n{"summary":"...","angles":[{"title":"5-8 word title","believes":"1 sentence","whyNow":"1 sentence","resonatesWith":"1 sentence","risk":"Safe"|"Moderate"|"Bold"}]}`);
+    state.summary = result.summary; state.angles = result.angles;
+    document.getElementById("summary-text").textContent = result.summary;
+    renderAngles();
+    showPhase("angles");
+  } catch { setError("input-error","Something went wrong — please try again."); }
+  btn.disabled = false; btn.textContent = "Clarify my thinking →";
+}
+
+function riskClass(r) { return {Safe:"risk-safe",Moderate:"risk-moderate",Bold:"risk-bold"}[r]||""; }
+
+function renderAngles() {
+  const list = document.getElementById("angles-list"); list.innerHTML = "";
+  state.angles.forEach((a,i) => {
+    const div = document.createElement("div"); div.className = "card";
+    div.innerHTML = `<div class="card-header"><div class="card-meta"><span class="card-num">Option ${i+1}</span><span class="card-title">${a.title}</span></div><span class="risk-badge ${riskClass(a.risk)}">${a.risk}</span></div><p class="card-believes">${a.believes}</p><p class="card-why">${a.whyNow}</p><p class="card-who">Resonates with: ${a.resonatesWith}</p>`;
+    div.onclick = () => handleAngleSelect(a);
+    list.appendChild(div);
+  });
+}
+
+async function handleAngleSelect(angle) {
+  state.selectedAngle = angle;
+  document.getElementById("hook-angle-title").textContent = angle.title;
+  document.getElementById("angles-loading").classList.remove("hidden");
+  setError("angles-error","");
+  try {
+    const result = await callClaude([{role:"user",content:`Angle: "${angle.title}" — ${angle.believes}`}],
+      `Suggest exactly 2 hook styles. ONLY JSON:\n{"hooks":[{"style":"name","example":"1-2 sentence hook","preview":"2-3 sentence LinkedIn opening continuing naturally"},{"style":"name","example":"1-2 sentence hook","preview":"2-3 sentence LinkedIn opening"}]}`);
+    state.hooks = result.hooks; renderHooks(); showPhase("hook");
+  } catch { setError("angles-error","Couldn't generate hooks — please try again."); }
+  document.getElementById("angles-loading").classList.add("hidden");
+}
+
+function renderHooks() {
+  const list = document.getElementById("hooks-list"); list.innerHTML = "";
+  state.hooks.forEach(h => {
+    const div = document.createElement("div"); div.className = "card";
+    div.innerHTML = `<p class="hook-style">${h.style}</p><p class="hook-example">"${h.example}"</p><hr class="hook-divider"/><p class="hook-preview-label">LinkedIn preview</p><p class="hook-preview-text">${h.preview}</p>`;
+    div.onclick = () => handleHookSelect(h);
+    list.appendChild(div);
+  });
+}
+
+async function handleHookSelect(hook) {
+  state.selectedHook = hook;
+  document.getElementById("hook-loading").classList.remove("hidden");
+  setError("hook-error","");
+  const role = document.getElementById("inp-role").value;
+  const tone = document.getElementById("inp-tone").value;
+  const context = document.getElementById("inp-context").value.trim();
+  try {
+    const result = await callClaude([{role:"user",content:`Angle: "${state.selectedAngle.title}" — ${state.selectedAngle.believes}\nHook: ${hook.style} — "${hook.example}"\nRole: ${role}\nTone: ${tone}${context?"\nPersonal context: "+context:""}\nPlatforms: ${state.platforms.join(", ")}`}],
+      `Write platform-specific thought leadership posts. Human, reflective, first person, no hype. ONLY JSON:\n{"linkedin":"full post 3-5 hashtags + reflective closing question","twitter":"under 240 chars one idea max 3 hashtags","facebook":"warm 1-2 paragraphs max 2 hashtags","substack":{"title":"blog title","body":"observation → why matters → 3 bold takeaways → question"}}`);
+    state.posts = result; state.activeTab = state.platforms[0]||"LinkedIn";
+    renderPosts(); showPhase("posts");
+  } catch { setError("hook-error","Couldn't generate posts — please try again."); }
+  document.getElementById("hook-loading").classList.add("hidden");
+}
+
+function platformKey(p) { return {"X (Twitter)":"twitter","LinkedIn":"linkedin","Facebook":"facebook","Substack":"substack"}[p]||p.toLowerCase(); }
+
+function getPostText(p) {
+  const k = platformKey(p); const c = state.posts?.[k];
+  if (!c) return ""; return typeof c==="string"?c:`${c.title}\n\n${c.body}`;
+}
+
+function renderPosts() {
+  // Context bar
+  const tone = document.getElementById("inp-tone").value;
+  document.getElementById("posts-context-bar").innerHTML = `<span><strong>Angle:</strong> ${state.selectedAngle.title}</span><span><strong>Hook:</strong> ${state.selectedHook.style}</span><span><strong>Tone:</strong> ${tone}</span>`;
+  // Tabs
+  const tabs = document.getElementById("post-tabs"); tabs.innerHTML = "";
+  state.platforms.forEach(p => {
+    const btn = document.createElement("button"); btn.className = "pill" + (p===state.activeTab?" active":"");
+    btn.textContent = p; btn.onclick = () => { state.activeTab = p; renderPostContent(); renderTabs(); };
+    tabs.appendChild(btn);
+  });
+  renderPostContent();
+}
+
+function renderTabs() {
+  document.querySelectorAll("#post-tabs .pill").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent === state.activeTab);
+  });
+}
+
+function renderPostContent() {
+  const p = state.activeTab; const k = platformKey(p); const content = state.posts?.[k];
+  const container = document.getElementById("post-content");
+  if (!content) { container.innerHTML = `<p style="color:var(--text-secondary);font-size:14px">No content generated for this platform.</p>`; return; }
+  const isSubstack = k==="substack";
+  const displayText = isSubstack?`${content.title}\n\n${content.body}`:content;
+  const charCount = k==="twitter"?`<div class="post-char${typeof content==="string"&&content.length>240?" over":""}">${typeof content==="string"?content.length:0} / 240</div>`:"";
+  const substackTitle = isSubstack?`<p class="post-title">${content.title}</p>`:"";
+  const bodyText = isSubstack?content.body:content;
+  const substackTags = isSubstack?`<div class="substack-tags"><span class="substack-tag">Personal observation</span><span class="substack-tag">Why it matters now</span><span class="substack-tag">3 takeaways</span><span class="substack-tag">Closing question</span></div>`:"";
+  container.innerHTML = `<div class="post-card">${charCount}${substackTitle}<pre class="post-body">${escHtml(bodyText)}</pre>${substackTags}<div class="post-btns"><button class="btn-copy" id="btn-copy-post" onclick="copyPost('${k}','${escAttr(displayText)}')">Copy post</button><button class="btn-regen" onclick="regenPlatform('${p}')">Regenerate this post</button></div></div>`;
+}
+
+function escHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escAttr(s) { return s.replace(/'/g,"&#39;").replace(/\n/g,"\\n"); }
+
+async function regenPlatform(p) {
+  const k = platformKey(p);
+  const regen = document.querySelector(".btn-regen");
+  if (regen) { regen.disabled = true; regen.textContent = "Regenerating..."; }
+  const role = document.getElementById("inp-role").value;
+  const tone = document.getElementById("inp-tone").value;
+  const context = document.getElementById("inp-context").value.trim();
+  try {
+    const result = await callClaude([{role:"user",content:`Angle: "${state.selectedAngle.title}" — ${state.selectedAngle.believes}\nHook: ${state.selectedHook.style}\nRole: ${role}\nTone: ${tone}${context?"\nPersonal context: "+context:""}\nRegenerate only: ${k}`}],
+      `Write platform-specific thought leadership posts. Human, reflective, first person. ONLY JSON:\n{"linkedin":"...","twitter":"...","facebook":"...","substack":{"title":"...","body":"..."}}`);
+    Object.assign(state.posts, result); renderPostContent();
+  } catch { alert("Couldn't regenerate — please try again."); }
+}
+
+function copyPost(k, text) {
+  const decoded = text.replace(/\\n/g,"\n");
+  navigator.clipboard.writeText(decoded);
+  const btn = document.getElementById("btn-copy-post");
+  if (btn) { btn.textContent = "Copied!"; btn.classList.add("copied"); setTimeout(()=>{btn.textContent="Copy post";btn.classList.remove("copied");},2000); }
+}
+
+function copyAll() {
+  const all = state.platforms.map(p=>`=== ${p} ===\n${getPostText(p)}`).join("\n\n");
+  navigator.clipboard.writeText(all);
+  const btn = document.getElementById("btn-copy-all");
+  btn.textContent = "All posts copied!"; btn.classList.add("copied");
+  setTimeout(()=>{btn.textContent="Copy all posts";btn.classList.remove("copied");},2000);
+}
+
+function goBackToAngles() { document.getElementById("hook-loading").classList.add("hidden"); showPhase("angles"); }
+function goBackToHook() { showPhase("hook"); }
+
+function reset() {
+  state = {platforms:["LinkedIn","X (Twitter)"],summary:"",angles:[],selectedAngle:null,hooks:[],selectedHook:null,posts:null,activeTab:"LinkedIn"};
+  document.getElementById("inp-topic").value = "";
+  document.getElementById("inp-role").value = "";
+  document.getElementById("inp-tone").value = "";
+  document.getElementById("inp-context").value = "";
+  document.querySelectorAll(".pill").forEach(btn => { btn.classList.toggle("active",["LinkedIn","X (Twitter)"].includes(btn.dataset.platform)); });
+  document.getElementById("sample-box").classList.add("hidden");
+  document.getElementById("sample-toggle").textContent = "See a sample output first →";
+  setError("input-error","");
+  showPhase("input");
+}
+</script>
+</body>
+</html>
