@@ -12,98 +12,97 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue:#185FA5;--blue-light:#E6F1FB;--blue-dark:#0C447C;
-  --green-light:#EAF3DE;--green-dark:#3B6D11;
-  --bg:#F7F7F5;--card:#FFFFFF;--card2:#F0EFE9;
-  --border:rgba(0,0,0,0.1);--border-sub:rgba(0,0,0,0.06);
-  --t1:#1A1A1A;--t2:#555;--t3:#999;--r-md:8px;--r-lg:12px;--r-xl:16px
+  --blue:#60A5FA;--blue-light:rgba(96,165,250,0.12);--blue-mid:rgba(96,165,250,0.25);
+  --green-light:rgba(74,222,128,0.12);--green-dark:#4ADE80;
+  --bg:#0A0A0A;--card:rgba(255,255,255,0.04);--card2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.09);--border-sub:rgba(255,255,255,0.05);
+  --t1:#F0F0F0;--t2:#9A9A9A;--t3:#555;
+  --r-md:8px;--r-lg:12px;--r-xl:16px;
+  --silver-grad:linear-gradient(135deg,#1a1a1a 0%,#0f0f0f 40%,#161616 70%,#111 100%)
 }
-@media(prefers-color-scheme:dark){:root{
-  --blue:#5BA3E8;--blue-light:#0C2540;--blue-dark:#B5D4F4;
-  --green-light:#1A2E12;--green-dark:#8BCB5A;
-  --bg:#111;--card:#1C1C1C;--card2:#252525;
-  --border:rgba(255,255,255,0.1);--border-sub:rgba(255,255,255,0.06);
-  --t1:#EDEDED;--t2:#AAA;--t3:#666
-}}
 html{scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--t1);line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);background-image:var(--silver-grad);color:var(--t1);line-height:1.6;min-height:100vh}
 a{color:var(--blue);text-decoration:none}
 
-/* Layout */
-.wrap{max-width:720px;margin:0 auto;padding:0 1.25rem}
+/* Subtle grid texture */
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(96,165,250,0.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(148,163,184,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+.wrap{max-width:720px;margin:0 auto;padding:0 1.25rem;position:relative;z-index:1}
 
 /* Nav */
-nav{padding:1.25rem 0;border-bottom:0.5px solid var(--border);margin-bottom:0}
+nav{padding:1.25rem 0;border-bottom:0.5px solid var(--border)}
 .nav-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .nav-logo{font-size:14px;font-weight:600;color:var(--t1)}
-.nav-link{font-size:13px;color:var(--blue)}
+.nav-cta{font-size:13px;font-weight:500;color:var(--blue);padding:6px 16px;border:0.5px solid var(--blue-mid);border-radius:20px;transition:background .15s}
+.nav-cta:hover{background:var(--blue-light)}
 
 /* Hero */
-.hero{padding:4rem 0 3rem;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--blue);background:var(--blue-light);padding:5px 14px;border-radius:20px;margin-bottom:1.5rem}
-.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);display:inline-block}
-h1{font-size:clamp(28px,5vw,42px);font-weight:700;color:var(--t1);line-height:1.2;margin-bottom:1rem;letter-spacing:-0.02em}
-h1 em{font-style:normal;color:var(--blue)}
-.hero-sub{font-size:17px;color:var(--t2);line-height:1.7;max-width:520px;margin:0 auto 2rem}
-.cta-btn{display:inline-block;padding:14px 32px;font-size:16px;font-weight:600;border-radius:var(--r-md);background:var(--blue);color:#fff;transition:opacity .15s}
+.hero{padding:4rem 0 2rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--blue);background:var(--blue-light);border:0.5px solid var(--blue-mid);padding:5px 14px;border-radius:20px;margin-bottom:1.75rem}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);display:inline-block;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-size:clamp(30px,5vw,46px);font-weight:700;color:var(--t1);line-height:1.15;margin-bottom:1.25rem;letter-spacing:-0.025em}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--blue),#93C5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--t2);line-height:1.75;max-width:500px;margin:0 auto 2rem}
+
+/* Trust pills — moved up, right under hero */
+.trust{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem}
+.trust-pill{font-size:12px;color:var(--t2);background:var(--card2);border:0.5px solid var(--border);border-radius:20px;padding:5px 14px;display:flex;align-items:center;gap:6px}
+.trust-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+/* CTA */
+.cta-btn{display:inline-block;padding:14px 36px;font-size:16px;font-weight:600;border-radius:var(--r-md);background:var(--blue);color:#0A0A0A;transition:opacity .15s;letter-spacing:-.01em}
 .cta-btn:hover{opacity:.88}
 .cta-note{font-size:12px;color:var(--t3);margin-top:10px}
 
-/* Trust bar */
-.trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding:1.5rem 0;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);margin:3rem 0}
-.trust-item{font-size:13px;color:var(--t2);display:flex;align-items:center;gap:6px}
-.trust-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+/* Divider */
+.divider{height:0.5px;background:var(--border);margin:3rem 0}
 
-/* Problem */
-.section{padding:3rem 0}
-.section-label{font-size:12px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-h2{font-size:clamp(22px,3vw,28px);font-weight:700;color:var(--t1);line-height:1.3;margin-bottom:1rem}
-.body-text{font-size:16px;color:var(--t2);line-height:1.8}
+/* Sections */
+.section{padding:2.5rem 0}
+.section-label{font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+h2{font-size:clamp(20px,3vw,26px);font-weight:700;color:var(--t1);line-height:1.3;margin-bottom:.875rem}
+.body-text{font-size:15px;color:var(--t2);line-height:1.8}
 
-/* How it works */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:2rem}
-.step-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:1.5rem}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--blue);margin-bottom:14px}
-.step-title{font-size:15px;font-weight:600;color:var(--t1);margin-bottom:6px}
-.step-desc{font-size:14px;color:var(--t2);line-height:1.6}
+/* Steps grid */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:1.75rem}
+.step-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:1.375rem;transition:border-color .2s}
+.step-card:hover{border-color:rgba(96,165,250,0.3)}
+.step-num{width:30px;height:30px;border-radius:50%;background:var(--blue-light);border:0.5px solid var(--blue-mid);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);margin-bottom:12px}
+.step-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:5px}
+.step-desc{font-size:13px;color:var(--t2);line-height:1.65}
 
-/* Sample post */
-.sample{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-top:2rem}
-.sample-hd{background:var(--card2);padding:12px 20px;font-size:12px;color:var(--t3);border-bottom:0.5px solid var(--border)}
-.sample-body{padding:1.5rem 1.5rem}
-.sample-platform{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.sample-text{font-size:14px;color:var(--t1);line-height:1.8;white-space:pre-wrap;font-family:inherit}
-.sample-fade{-webkit-mask-image:linear-gradient(to bottom,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 60%,transparent 100%);max-height:200px;overflow:hidden}
+/* Sample */
+.sample{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-top:1.75rem}
+.sample-hd{background:var(--card2);padding:11px 20px;font-size:11px;color:var(--t3);border-bottom:0.5px solid var(--border);letter-spacing:.02em}
+.sample-body{padding:1.5rem}
+.sample-platform{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.sample-text{font-size:14px;color:var(--t1);line-height:1.85;white-space:pre-wrap;font-family:inherit;opacity:.85}
+.sample-fade{-webkit-mask-image:linear-gradient(to bottom,black 55%,transparent 100%);mask-image:linear-gradient(to bottom,black 55%,transparent 100%);max-height:210px;overflow:hidden}
 
 /* Built with */
-.built{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-xl);padding:2rem;margin-top:2rem}
-.built-title{font-size:18px;font-weight:700;color:var(--t1);margin-bottom:6px}
-.built-sub{font-size:14px;color:var(--t2);margin-bottom:1.5rem;line-height:1.6}
-.built-steps{display:flex;flex-direction:column;gap:14px}
+.built{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-xl);padding:1.75rem;margin-top:1.75rem}
+.built-steps{display:flex;flex-direction:column;gap:16px}
 .built-step{display:flex;gap:14px;align-items:flex-start}
-.built-icon{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;border:0.5px solid var(--border)}
-.built-icon.claude{background:#E6F1FB}
-.built-icon.github{background:var(--card2)}
-.built-icon.brain{background:var(--green-light)}
-.built-text-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:2px}
-.built-text-desc{font-size:13px;color:var(--t2);line-height:1.6}
+.built-icon{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;border:0.5px solid var(--border);background:var(--card2)}
+.built-text-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:3px}
+.built-text-desc{font-size:13px;color:var(--t2);line-height:1.65}
 .built-divider{height:0.5px;background:var(--border);margin:4px 0 0 50px}
 
 /* About */
-.about{background:var(--card2);border-radius:var(--r-xl);padding:2rem;margin-top:2rem;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
-.about-avatar{width:52px;height:52px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--blue);flex-shrink:0}
+.about{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-xl);padding:1.75rem;margin-top:1.75rem;display:flex;gap:1.25rem;align-items:flex-start;flex-wrap:wrap}
+.about-avatar{width:48px;height:48px;border-radius:50%;background:var(--blue-light);border:0.5px solid var(--blue-mid);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--blue);flex-shrink:0}
 .about-name{font-size:15px;font-weight:600;color:var(--t1);margin-bottom:2px}
-.about-role{font-size:13px;color:var(--t2);margin-bottom:10px}
-.about-bio{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px}
+.about-role{font-size:12px;color:var(--t3);margin-bottom:10px}
+.about-bio{font-size:14px;color:var(--t2);line-height:1.75;margin-bottom:10px}
 .about-link{font-size:13px;color:var(--blue)}
 
-/* CTA section */
+/* Final CTA */
 .cta-section{text-align:center;padding:4rem 0 5rem}
 .cta-section h2{margin-bottom:.75rem}
-.cta-section .body-text{margin-bottom:2rem}
+.cta-section .body-text{margin-bottom:2rem;max-width:420px;margin-left:auto;margin-right:auto}
 
 /* Footer */
-footer{border-top:0.5px solid var(--border);padding:1.5rem 0;text-align:center}
+footer{border-top:0.5px solid var(--border);padding:1.5rem 0;text-align:center;position:relative;z-index:1}
 .footer-text{font-size:12px;color:var(--t3)}
 </style>
 </head>
@@ -113,50 +112,56 @@ footer{border-top:0.5px solid var(--border);padding:1.5rem 0;text-align:center}
 <nav>
   <div class="wrap nav-inner">
     <span class="nav-logo">Thought Leadership Social Post Generator</span>
-    <a class="nav-link" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it free →</a>
+    <a class="nav-cta" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it free →</a>
   </div>
 </nav>
 
-<!-- Hero -->
 <div class="wrap">
+
+  <!-- Hero -->
   <div class="hero">
-    <div class="hero-badge"><span class="hero-badge-dot"></span>Free to use · No sign-up required</div>
+    <div class="hero-badge"><span class="hero-badge-dot"></span>Free to use</div>
     <h1>Stop generating posts<br/>you don't <em>believe in</em></h1>
-    <p class="hero-sub">Most AI tools write before you think. This one coaches you through your perspective first — then writes posts for LinkedIn, X, Facebook &amp; Substack that sound like you, not like AI.</p>
-    <a class="cta-btn" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it now — it's free →</a>
-    <p class="cta-note">Powered by Claude · No account needed</p>
+    <p class="hero-sub">Most AI tools write before you think. This one coaches you through your perspective first, then writes posts for LinkedIn, X, Facebook and Substack that sound like you, not like AI.</p>
+
+    <!-- Trust pills — right under the description -->
+    <div class="trust">
+      <span class="trust-pill"><span class="trust-dot"></span>Angle-first, not template-first</span>
+      <span class="trust-pill"><span class="trust-dot"></span>Role-aware perspective coaching</span>
+      <span class="trust-pill"><span class="trust-dot"></span>4 platforms in one flow</span>
+      <span class="trust-pill"><span class="trust-dot"></span>Safe / Moderate / Bold risk levels</span>
+    </div>
+
+    <a class="cta-btn" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it now</a>
+    <p class="cta-note">Created by a Content Leader. Powered by Claude.</p>
   </div>
 
-  <!-- Trust bar -->
-  <div class="trust">
-    <span class="trust-item"><span class="trust-dot"></span>Angle-first, not template-first</span>
-    <span class="trust-item"><span class="trust-dot"></span>Role-aware perspective coaching</span>
-    <span class="trust-item"><span class="trust-dot"></span>4 platforms in one flow</span>
-    <span class="trust-item"><span class="trust-dot"></span>Safe / Moderate / Bold risk levels</span>
-  </div>
+  <div class="divider"></div>
 
   <!-- Problem -->
   <div class="section">
     <p class="section-label">The problem</p>
     <h2>Most content tools solve the wrong problem</h2>
-    <p class="body-text">They fix the blank page. But the real block isn't writing — it's not knowing what you actually believe about a topic. So you get polished posts that could've been written by anyone. That's not thought leadership. That's noise.</p>
+    <p class="body-text">They fix the blank page. But the real block isn't writing; it's not knowing what you actually believe about a topic. So you get polished posts that could've been written by anyone. That's not thought leadership. That's noise.</p>
     <p class="body-text" style="margin-top:1rem">This tool fixes the thinking first. It forces you to choose a perspective you can genuinely stand behind before a single word is written.</p>
   </div>
 
+  <div class="divider"></div>
+
   <!-- How it works -->
-  <div class="section" style="padding-top:0">
+  <div class="section">
     <p class="section-label">How it works</p>
     <h2>Own your angle in 4 steps</h2>
     <div class="steps">
       <div class="step-card">
         <div class="step-num">1</div>
         <p class="step-title">Clarify your topic</p>
-        <p class="step-desc">Paste a URL, article title, or 3–4 rough lines. The tool surfaces what the topic is really about in one line.</p>
+        <p class="step-desc">Paste a URL, article title, or a few rough lines. The tool surfaces what the topic is really about in one line.</p>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <p class="step-title">Own your angle</p>
-        <p class="step-desc">Choose from 3 distinct perspectives — Safe, Moderate, or Bold — that you can genuinely stand behind.</p>
+        <p class="step-desc">Choose from 3 distinct perspectives, Safe, Moderate, or Bold, that you can genuinely stand behind.</p>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
@@ -166,32 +171,34 @@ footer{border-top:0.5px solid var(--border);padding:1.5rem 0;text-align:center}
       <div class="step-card">
         <div class="step-num">4</div>
         <p class="step-title">Get your posts</p>
-        <p class="step-desc">Receive platform-ready posts for LinkedIn, X, Facebook &amp; Substack. Regenerate any platform instantly.</p>
+        <p class="step-desc">Receive platform-ready posts for LinkedIn, X, Facebook and Substack. Regenerate any platform instantly.</p>
       </div>
     </div>
   </div>
 
+  <div class="divider"></div>
+
   <!-- Sample -->
-  <div class="section" style="padding-top:0">
+  <div class="section">
     <p class="section-label">Sample output</p>
     <h2>What it actually produces</h2>
-    <p class="body-text">Topic: <em>AI content tools skip the thinking step</em> · Role: Marketing · Angle: The thinking gap nobody talks about</p>
+    <p class="body-text">Topic: AI content tools skip the thinking step. Role: Marketing. Angle: The thinking gap nobody talks about.</p>
     <div class="sample">
-      <div class="sample-hd">LinkedIn post — generated in under 60 seconds</div>
+      <div class="sample-hd">LinkedIn post · Generated in under 60 seconds</div>
       <div class="sample-body">
         <p class="sample-platform">LinkedIn</p>
         <pre class="sample-text sample-fade">Most AI writing tools solve the wrong problem.
 
 They fix the blank page. But they don't fix the blank mind.
 
-I've watched smart professionals churn out 5 LinkedIn posts a week — and none of them say anything. They're polished. They're formatted. They're empty.
+I've watched smart professionals churn out 5 LinkedIn posts a week, and none of them say anything. They're polished. They're formatted. They're empty.
 
 The real block isn't writing. It's not knowing what you actually believe about a topic.
 
 So I built something different. Before generating a single word, it asks:
-→ What angle do you actually own here?
-→ What's your emotional risk appetite — Safe, Moderate, or Bold?
-→ What hook style fits your voice?
+What angle do you actually own here?
+What's your risk appetite: Safe, Moderate, or Bold?
+What hook style fits your voice?
 
 Only then does it write.
 
@@ -202,54 +209,58 @@ What's your biggest frustration with content tools right now?
 #ThoughtLeadership #ContentMarketing #AITools #PersonalBranding #Marketing</pre>
       </div>
     </div>
-    <div style="text-align:center;margin-top:1.5rem">
-      <a class="cta-btn" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it yourself →</a>
+    <div style="text-align:center;margin-top:1.75rem">
+      <a class="cta-btn" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it now</a>
     </div>
   </div>
 
+  <div class="divider"></div>
+
   <!-- Built with -->
-  <div class="section" style="padding-top:0">
+  <div class="section">
     <p class="section-label">Built with</p>
     <h2>Claude brain + GitHub + marketing thinking</h2>
-    <p class="body-text">This wasn't a no-code click-through. It was a deliberate build — using AI as a thinking partner, not just a code generator.</p>
-    <div class="built" style="margin-top:1.5rem">
+    <p class="body-text">This wasn't a no-code click-through. It was a deliberate build, using AI as a thinking partner, not just a code generator.</p>
+    <div class="built">
       <div class="built-steps">
         <div class="built-step">
-          <div class="built-icon brain">💡</div>
+          <div class="built-icon">💡</div>
           <div>
-            <p class="built-text-title">Marketing strategy &amp; UX — Jayashree</p>
-            <p class="built-text-desc">The product thinking, the angle engine concept, the 4-step coaching flow, the risk labeling (Safe / Moderate / Bold), the competitive positioning — all came from the brief. Claude executed. The strategy was human.</p>
+            <p class="built-text-title">Marketing strategy and UX — Jayashree</p>
+            <p class="built-text-desc">The product thinking, the angle engine concept, the 4-step coaching flow, the risk labeling (Safe / Moderate / Bold), the competitive positioning. Claude executed. The strategy was human.</p>
           </div>
         </div>
         <div class="built-divider"></div>
         <div class="built-step">
-          <div class="built-icon claude">🤖</div>
+          <div class="built-icon">🤖</div>
           <div>
-            <p class="built-text-title">Code &amp; AI logic — Claude (Anthropic)</p>
-            <p class="built-text-desc">The entire tool was built inside Claude Artifacts — the HTML, CSS, JavaScript, the multi-phase prompting system, and the platform-specific post generation logic. No external IDE. No boilerplate. Just conversation-driven development.</p>
+            <p class="built-text-title">Code and AI logic — Claude (Anthropic)</p>
+            <p class="built-text-desc">The entire tool was built inside Claude Artifacts: the HTML, CSS, JavaScript, the multi-phase prompting system, and the platform-specific post generation logic. No external IDE, no boilerplate. Just conversation-driven development.</p>
           </div>
         </div>
         <div class="built-divider"></div>
         <div class="built-step">
-          <div class="built-icon github">⚡</div>
+          <div class="built-icon">⚡</div>
           <div>
             <p class="built-text-title">Deployment — GitHub Pages</p>
-            <p class="built-text-desc">This landing page is hosted on GitHub Pages — free, fast, and version-controlled. The tool itself runs on Claude's infrastructure via a public artifact link. No backend, no server costs, no maintenance overhead.</p>
+            <p class="built-text-desc">This landing page is hosted on GitHub Pages: free, fast, and version-controlled. The tool runs on Claude's infrastructure via a public artifact link. No backend, no server costs, no maintenance overhead.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="divider"></div>
+
   <!-- About -->
-  <div class="section" style="padding-top:0">
+  <div class="section">
     <p class="section-label">About the builder</p>
     <div class="about">
       <div class="about-avatar">JH</div>
       <div>
         <p class="about-name">Jayashree Hegde Adkoli</p>
-        <p class="about-role">Senior Growth Marketing Manager · B2B SaaS · Nuremberg, Germany</p>
-        <p class="about-bio">10+ years building content-led growth engines in B2B SaaS. Currently at HiveMQ, an industrial IoT infrastructure company. I own top-of-funnel growth — SEO/AEO/GEO, content strategy, PLG motion, paid campaigns, and marketing analytics. This tool came from a real frustration: watching smart people produce AI-assisted content that said nothing. The fix wasn't better writing. It was better thinking.</p>
+        <p class="about-role">Senior Growth Marketing Manager · B2B SaaS</p>
+        <p class="about-bio">10+ years building content-led growth engines in B2B SaaS. Currently at HiveMQ, an industrial IoT infrastructure company. I own top-of-funnel growth and lead SEO/AEO/GEO, paid campaigns, and AI-powered growth engines. I have led content strategy and content marketing for over a decade now. This tool came from a real frustration: watching smart people produce AI-assisted content that said nothing. The fix wasn't better writing. It was better thinking.</p>
         <a class="about-link" href="https://www.linkedin.com/in/jayashree-hegde-adkoli/" target="_blank">Connect on LinkedIn →</a>
       </div>
     </div>
@@ -259,15 +270,16 @@ What's your biggest frustration with content tools right now?
   <div class="cta-section">
     <p class="section-label">Ready?</p>
     <h2>Find your angle. Post with confidence.</h2>
-    <p class="body-text">Free to use. No sign-up. No account. Just paste an idea and go.</p>
-    <a class="cta-btn" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Open the tool →</a>
-    <p class="cta-note" style="margin-top:12px">Powered by Claude (Anthropic) · Built by Jayashree · Hosted on GitHub</p>
+    <p class="body-text">Free to use. Just paste an idea and go.</p>
+    <a class="cta-btn" href="https://claude.ai/public/artifacts/b5d813ea-698b-48ef-a299-88e345c433e5" target="_blank">Try it now</a>
+    <p class="cta-note" style="margin-top:12px">Created by a Content Leader. Powered by Claude. Hosted on GitHub.</p>
   </div>
+
 </div>
 
 <!-- Footer -->
 <footer>
-  <p class="footer-text">© 2026 Jayashree Hegde Adkoli · <a href="https://www.linkedin.com/in/jayashree-hegde-adkoli/" target="_blank">LinkedIn</a> · Built with Claude + GitHub</p>
+  <p class="footer-text">© 2026 Jayashree Hegde Adkoli · <a href="https://www.linkedin.com/in/jayashree-hegde-adkoli/" target="_blank">LinkedIn</a> · Built with Claude and GitHub</p>
 </footer>
 
 </body>
